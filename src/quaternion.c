@@ -1,5 +1,7 @@
 #include "quaternion.h"
 
+#include <math.h>
+
 void quaternion_add(const struct Quaternion *lhs, const struct Quaternion *rhs,
                     struct Quaternion *out) {
   out->w = lhs->w + rhs->w;

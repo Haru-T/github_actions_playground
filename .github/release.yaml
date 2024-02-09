@@ -1,0 +1,11 @@
+changelog:
+  categories:
+    - title: ":boom: Breaking Changes"
+      labels:
+        - breaking-changes
+    - title: ":sparkles: New Features"
+      labels:
+        - '*'
+      exclude:
+        labels:
+          - breaking-changes

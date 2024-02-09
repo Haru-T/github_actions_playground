@@ -1,23 +1,24 @@
 SHELL = /bin/sh
 
 CFLAGS  += -Iinclude -std=c99
+LIBS    += -lm
 
 .PHONY: all
-all: libquaternion.a
+all: quaternion2matrix
 
 .PHONY: test
 test: test-quaternion
 	./test-quaternion
 
-quaternion.o: src/quaternion.c include/quaternion.h
+%.o: src/%.c include/quaternion.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-libquaternion.a: libquaternion.a(quaternion.o)
-	$(AR) $(ARFLAGS) $@ $?
+quaternion2matrix: quaternion2matrix.o quaternion.o
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LIBS) -o $@
 
-test-quaternion: test/quaternion.c libquaternion.a
-	$(CC) $(CFLAGS) $^ -lm -o $@
+test-quaternion: test/quaternion.c quaternion.o
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LIBS) -o $@
 
 .PHONY: clean
 clean:
-	$(RM) quaternion.o libquaternion.a test-quaternion
+	$(RM) quaternion.o quaternion2matrix.o quaternion2matrix test-quaternion
